@@ -66,3 +66,16 @@
 - (void)selectColumnForDate:(NSDate *)date;
 
 @end
+
+
+@interface TSQCalendarButton : UIButton
+
+@property UILabel* textLabel;
+
+- (void) setTitle:(NSString *)title forState:(UIControlState)state;
+
+- (void) setTitleColor:(UIColor *)color forState:(UIControlState)state;
+
+- (void) setTitleShadowColor:(UIColor *)color forState:(UIControlState)state;
+
+@end
