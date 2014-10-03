@@ -25,6 +25,7 @@
  */
 @property (nonatomic, weak, readonly) UIImage *backgroundImage;
 
+
 /** The background image for a day that's selected.
  
  This is blue in the system's built-in Calendar app. You probably want to use a stretchable image.
@@ -36,6 +37,9 @@
  This is dark gray in the system's built-in Calendar app. You probably want to use a stretchable image.
  */
 @property (nonatomic, weak, readonly) UIImage *todayBackgroundImage;
+
+@property (nonatomic, weak, readonly) UIImage* defaultCellBackground;
+@property (nonatomic, weak, readonly) UIImage* highlightedCellBackground;
 
 /** The background image for a day that's not this month.
  
@@ -64,6 +68,9 @@
  @param date The date to select, or nil to deselect all columns.
  */
 - (void)selectColumnForDate:(NSDate *)date;
+
+
+- (void)highlightColumnsForDates:(NSArray*)dates;
 
 @end
 

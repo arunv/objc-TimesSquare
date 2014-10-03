@@ -27,6 +27,8 @@
 @property (nonatomic, strong) NSDateComponents *todayDateComponents;
 @property (nonatomic) NSInteger monthOfBeginningDate;
 
+@property (nonatomic, strong) NSArray* indicesOfHighlightedButtons;
+
 @end
 
 
@@ -59,7 +61,11 @@
         [button addTarget:self action:@selector(dateButtonPressed:) forControlEvents:UIControlEventTouchDown];
         [dayButtons addObject:button];
         [self.contentView addSubview:button];
-        [button setImage:[self backgroundImage] forState:UIControlStateNormal];
+        if ([self.indicesOfHighlightedButtons containsObject:@(index)]) {
+            [button setImage:[self highlightedCellBackground] forState:UIControlStateNormal];
+        } else {
+            [button setImage:[self defaultCellBackground] forState:UIControlStateNormal];
+        }
         [self configureButton:button];
         [button setTitleColor:[self.textColor colorWithAlphaComponent:0.5f] forState:UIControlStateDisabled];
     }
@@ -77,9 +83,6 @@
         
         button.enabled = NO;
         [button setImage:[self notThisMonthBackgroundImage] forState:UIControlStateNormal];
-        //        UIColor *backgroundPattern = [UIColor colorWithPatternImage:[self notThisMonthBackgroundImage]];
-        //        button.backgroundColor = backgroundPattern;
-        //        button.textLabel.backgroundColor = backgroundPattern;
     }
     self.notThisMonthButtons = notThisMonthButtons;
 }
@@ -153,7 +156,7 @@
             [self.notThisMonthButtons[index] setHidden:NO];
         } else {
             
-            if ([self.todayDateComponents isEqual:thisDateComponents]) {
+            if (NO && [self.todayDateComponents isEqual:thisDateComponents]) {
                 self.todayButton.hidden = NO;
                 [self.todayButton setTitle:title forState:UIControlStateNormal];
                 [self.todayButton setAccessibilityLabel:accessibilityLabel];
@@ -177,7 +180,7 @@
     }
     
     _bottomRow = bottomRow;
-    self.backgroundView = [[UIView alloc] initWithFrame:self.contentView.bounds];
+    self.backgroundView = [[UIImageView alloc] initWithImage:[self backgroundImage]];
     
     [self setNeedsLayout];
 }
@@ -252,6 +255,46 @@
         [self.selectedButton setAccessibilityLabel:[self.dayButtons[newIndexOfSelectedButton] accessibilityLabel]];
     } else {
         self.selectedButton.hidden = YES;
+    }
+    
+    [self setNeedsLayout];
+}
+
+- (void)highlightColumnsForDates:(NSArray *)dates
+{
+    if ((!dates || dates.count == 0) &&
+        (!self.indicesOfHighlightedButtons || self.indicesOfHighlightedButtons.count == 0)) {
+        return;
+    }
+    
+    NSMutableArray* indices = [NSMutableArray new];
+    
+    for (int i = 0; i < dates.count; i++) {
+        NSDate* date = (NSDate*) dates[i];
+        NSInteger index = -1;
+        if (date) {
+            NSInteger thisDayMonth = [self.calendar components:NSMonthCalendarUnit fromDate:date].month;
+            if (self.monthOfBeginningDate == thisDayMonth) {
+                index = [self.calendar components:NSDayCalendarUnit fromDate:self.beginningDate toDate:date options:0].day;
+                if (index >= (NSInteger)self.daysInWeek) {
+                    index = -1;
+                }
+            }
+        }
+    
+        
+        if (index >= 0) {
+            [indices addObject:@(index)];
+        }
+    }
+    self.indicesOfHighlightedButtons = indices;
+    
+    for (int i = 0; i < self.dayButtons.count; i++) {
+        if ([self.indicesOfHighlightedButtons containsObject:@(i)]) {
+            [self.dayButtons[i] setImage:[self highlightedCellBackground] forState:UIControlStateNormal];
+        } else {
+            [self.dayButtons[i] setImage:[self defaultCellBackground] forState:UIControlStateNormal];
+        }
     }
     
     [self setNeedsLayout];

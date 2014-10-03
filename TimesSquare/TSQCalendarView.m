@@ -21,6 +21,8 @@
 
 @implementation TSQCalendarView
 
+@synthesize highlightedDates;
+
 - (id)initWithCoder:(NSCoder *)aDecoder;
 {
     self = [super initWithCoder:aDecoder];
@@ -282,6 +284,9 @@
         dateComponents.week = indexPath.row - (self.pinsHeaderToTop ? 0 : 1);
         [(TSQCalendarRowCell *)cell setBeginningDate:[self.calendar dateByAddingComponents:dateComponents toDate:firstOfMonth options:0]];
         [(TSQCalendarRowCell *)cell selectColumnForDate:self.selectedDate];
+        if (self.highlightedDates) {
+            [(TSQCalendarRowCell *)cell highlightColumnsForDates:self.highlightedDates];
+        }
         
         BOOL isBottomRow = (indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section] - (self.pinsHeaderToTop ? 0 : 1));
         [(TSQCalendarRowCell *)cell setBottomRow:isBottomRow];

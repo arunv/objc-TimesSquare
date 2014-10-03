@@ -42,6 +42,8 @@
  */
 @property (nonatomic, strong) NSDate *selectedDate;
 
+@property (nonatomic, strong) NSArray *highlightedDates;
+
 /** @name Calendar Configuration */
 
 /** The calendar type to use when displaying.
