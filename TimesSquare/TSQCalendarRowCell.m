@@ -34,6 +34,8 @@
 
 @implementation TSQCalendarRowCell
 
+@synthesize defaultCellBackground, highlightedCellBackground;
+
 - (id)initWithCalendar:(NSCalendar *)calendar reuseIdentifier:(NSString *)reuseIdentifier;
 {
     self = [super initWithCalendar:calendar reuseIdentifier:reuseIdentifier];
