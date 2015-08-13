@@ -13,6 +13,8 @@
  
  Each of the seven columns can represent a day that's in this month, a day that's not in this month, a selected day, today, or an unselected day. The cell uses several images placed strategically to achieve the effect.
  */
+@class TSQCalendarButton;
+
 @interface TSQCalendarRowCell : TSQCalendarCell
 
 /** @name Images */
@@ -71,6 +73,11 @@
 
 
 - (void)highlightColumnsForDates:(NSArray*)dates;
+
+
+- (void) customizeHighlightedButton:(TSQCalendarButton *)button;
+
+- (void)customizeDefaultButton:(TSQCalendarButton *)button;
 
 @end
 

@@ -61,7 +61,7 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
     
     NSDateFormatter *dayFormatter = [NSDateFormatter new];
     dayFormatter.calendar = self.calendar;
-    dayFormatter.dateFormat = @"cccccc";
+    dayFormatter.dateFormat = @"EEE";
     
     for (NSUInteger index = 0; index < self.daysInWeek; index++) {
         [headerLabels addObject:@""];
@@ -85,10 +85,14 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
     }
     
     self.headerLabels = headerLabels;
-    self.textLabel.textAlignment = UITextAlignmentCenter;
-    self.textLabel.textColor = self.textColor;
-    self.textLabel.shadowColor = [UIColor whiteColor];
-    self.textLabel.shadowOffset = self.shadowOffset;
+    [self customizeMonthHeaderLabel:self.textLabel];
+}
+
+- (void) customizeMonthHeaderLabel:(UILabel*)label {
+    label.textAlignment = UITextAlignmentCenter;
+    label.textColor = self.textColor;
+    label.shadowColor = [UIColor whiteColor];
+    label.shadowOffset = self.shadowOffset;
 }
 
 - (void)layoutSubviews;

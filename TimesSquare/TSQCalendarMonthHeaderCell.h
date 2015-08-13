@@ -30,4 +30,10 @@
  */
 - (void)createHeaderLabels;
 
+
+/**
+ * Customizes the month header label
+ */
+- (void) customizeMonthHeaderLabel:(UILabel*)label;
+
 @end

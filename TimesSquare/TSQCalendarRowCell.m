@@ -46,13 +46,25 @@
     return self;
 }
 
-- (void)configureButton:(TSQCalendarButton *)button;
+- (void)configureButton:(TSQCalendarButton *)button
 {
+
     button.textLabel.font = [UIFont boldSystemFontOfSize:19.f];
     button.textLabel.shadowOffset = self.shadowOffset;
     button.adjustsImageWhenDisabled = NO;
     [button setTitleColor:self.textColor forState:UIControlStateNormal];
     [button setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+}
+
+- (void) customizeHighlightedButton:(TSQCalendarButton *)button
+{
+    
+}
+
+- (void)customizeDefaultButton:(TSQCalendarButton *)button
+{
+    
 }
 
 - (void)createDayButtons;
@@ -63,13 +75,17 @@
         [button addTarget:self action:@selector(dateButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [dayButtons addObject:button];
         [self.contentView addSubview:button];
-        if ([self.indicesOfHighlightedButtons containsObject:@(index)]) {
-            [button setImage:[self highlightedCellBackground] forState:UIControlStateNormal];
-        } else {
-            [button setImage:[self defaultCellBackground] forState:UIControlStateNormal];
-        }
         [self configureButton:button];
         [button setTitleColor:[self.textColor colorWithAlphaComponent:0.5f] forState:UIControlStateDisabled];
+        
+        if (self.indicesOfHighlightedButtons != nil && [self.indicesOfHighlightedButtons containsObject:@(index)]) {
+            [button setImage:[self highlightedCellBackground] forState:UIControlStateNormal];
+            [self customizeHighlightedButton:button];
+        } else {
+            [button setImage:[self defaultCellBackground] forState:UIControlStateNormal];
+            [self customizeDefaultButton:button];
+        }
+
     }
     self.dayButtons = dayButtons;
 }
@@ -294,8 +310,10 @@
     for (int i = 0; i < self.dayButtons.count; i++) {
         if ([self.indicesOfHighlightedButtons containsObject:@(i)]) {
             [self.dayButtons[i] setImage:[self highlightedCellBackground] forState:UIControlStateNormal];
+            [self customizeHighlightedButton:self.dayButtons[i]];
         } else {
             [self.dayButtons[i] setImage:[self defaultCellBackground] forState:UIControlStateNormal];
+            [self customizeDefaultButton:self.dayButtons[i]];
         }
     }
     
