@@ -164,7 +164,7 @@
         [self.notThisMonthButtons[index] setTitle:title forState:UIControlStateDisabled];
         [self.notThisMonthButtons[index] setAccessibilityLabel:accessibilityLabel];
         
-        NSDateComponents *thisDateComponents = [self.calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:date];
+        NSDateComponents *thisDateComponents = [self.calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:date];
         
         [self.dayButtons[index] setHidden:YES];
         [self.notThisMonthButtons[index] setHidden:YES];
@@ -254,9 +254,9 @@
     
     NSInteger newIndexOfSelectedButton = -1;
     if (date) {
-        NSInteger thisDayMonth = [self.calendar components:NSMonthCalendarUnit fromDate:date].month;
+        NSInteger thisDayMonth = [self.calendar components:NSCalendarUnitMonth fromDate:date].month;
         if (self.monthOfBeginningDate == thisDayMonth) {
-            newIndexOfSelectedButton = [self.calendar components:NSDayCalendarUnit fromDate:self.beginningDate toDate:date options:0].day;
+            newIndexOfSelectedButton = [self.calendar components:NSCalendarUnitDay fromDate:self.beginningDate toDate:date options:0].day;
             if (newIndexOfSelectedButton >= (NSInteger)self.daysInWeek) {
                 newIndexOfSelectedButton = -1;
             }
@@ -291,9 +291,9 @@
         NSDate* date = (NSDate*) dates[i];
         NSInteger index = -1;
         if (date) {
-            NSInteger thisDayMonth = [self.calendar components:NSMonthCalendarUnit fromDate:date].month;
+            NSInteger thisDayMonth = [self.calendar components:NSCalendarUnitMonth fromDate:date].month;
             if (self.monthOfBeginningDate == thisDayMonth) {
-                index = [self.calendar components:NSDayCalendarUnit fromDate:self.beginningDate toDate:date options:0].day;
+                index = [self.calendar components:NSCalendarUnitDay fromDate:self.beginningDate toDate:date options:0].day;
                 if (index >= (NSInteger)self.daysInWeek) {
                     index = -1;
                 }
@@ -343,7 +343,7 @@
 - (NSInteger)monthOfBeginningDate;
 {
     if (!_monthOfBeginningDate) {
-        _monthOfBeginningDate = [self.calendar components:NSMonthCalendarUnit fromDate:self.firstOfMonth].month;
+        _monthOfBeginningDate = [self.calendar components:NSCalendarUnitMonth fromDate:self.firstOfMonth].month;
     }
     return _monthOfBeginningDate;
 }
@@ -357,7 +357,7 @@
 - (NSDateComponents *)todayDateComponents;
 {
     if (!_todayDateComponents) {
-        self.todayDateComponents = [self.calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
+        self.todayDateComponents = [self.calendar components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
     }
     return _todayDateComponents;
 }
