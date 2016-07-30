@@ -106,6 +106,9 @@
  */
 - (void)scrollToDate:(NSDate *)date animated:(BOOL)animated;
 
+
+- (void) reloadData;
+
 @end
 
 /** The methods in the `TSQCalendarViewDelegate` protocol allow the adopting delegate to either prevent a day from being selected or respond to it.

@@ -172,6 +172,10 @@
     return cell;
 }
 
+- (void) reloadData {
+    [self.tableView reloadData];
+}
+
 #pragma mark Calendar calculations
 
 - (NSDate *)firstOfMonthForSection:(NSInteger)section;
