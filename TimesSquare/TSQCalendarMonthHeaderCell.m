@@ -16,6 +16,7 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
 @interface TSQCalendarMonthHeaderCell ()
 
 @property (nonatomic, strong) NSDateFormatter *monthDateFormatter;
+@property (nonatomic, strong) UIView* borderView;
 
 @end
 
@@ -101,7 +102,17 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
 
     CGRect bounds = self.contentView.bounds;
     bounds.size.height -= TSQCalendarMonthHeaderCellMonthsHeight;
-    self.textLabel.frame = CGRectOffset(bounds, 0.0f, 5.0f);
+    self.textLabel.frame = CGRectOffset(bounds, 10.0f, 0.0f);
+    
+    if (!self.borderView) {
+        self.borderView = [[UIView alloc]
+                           initWithFrame:
+                           CGRectMake(
+                                      self.textLabel.frame.origin.x, self.textLabel.frame.origin.y + self.textLabel.frame.size.height - 5, self.textLabel.frame.size.width - 2, 1
+                            )];
+        self.borderView.backgroundColor = [UIColor colorWithRed:0.48 green:0.55 blue:0.61 alpha:0.5];
+        [self.contentView addSubview:self.borderView];
+    }
 }
 
 - (void)layoutViewsForColumnAtIndex:(NSUInteger)index inRect:(CGRect)rect;
@@ -116,8 +127,7 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
 - (void)setFirstOfMonth:(NSDate *)firstOfMonth;
 {
     [super setFirstOfMonth:firstOfMonth];
-    self.textLabel.text = [self.monthDateFormatter stringFromDate:firstOfMonth];
-    self.accessibilityLabel = self.textLabel.text;
+    [self setTextInMonthHeaderLabel:self.textLabel text:[self.monthDateFormatter stringFromDate:firstOfMonth]];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor;
@@ -126,6 +136,12 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
     for (UILabel *label in self.headerLabels) {
         label.backgroundColor = backgroundColor;
     }
+}
+
+- (void) setTextInMonthHeaderLabel:(UILabel*)label text:(NSString*)text;
+{
+    label.text = text;
+    self.accessibilityLabel = text;
 }
 
 @end

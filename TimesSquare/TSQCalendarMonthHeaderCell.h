@@ -36,4 +36,6 @@
  */
 - (void) customizeMonthHeaderLabel:(UILabel*)label;
 
+- (void) setTextInMonthHeaderLabel:(UILabel*)label text:(NSString*)text;
+
 @end
