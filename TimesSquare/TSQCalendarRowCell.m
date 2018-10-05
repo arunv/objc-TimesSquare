@@ -174,7 +174,7 @@
 //            [self.notThisMonthButtons[index] setHidden:NO];
         } else {
             
-            if (NO && [self.todayDateComponents isEqual:thisDateComponents]) {
+            if (/* DISABLES CODE */ (NO) && [self.todayDateComponents isEqual:thisDateComponents]) {
                 self.todayButton.hidden = NO;
                 [self.todayButton setTitle:title forState:UIControlStateNormal];
                 [self.todayButton setAccessibilityLabel:accessibilityLabel];

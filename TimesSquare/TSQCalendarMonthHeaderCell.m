@@ -69,9 +69,10 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
     }
     
     for (NSUInteger index = 0; index < self.daysInWeek; index++) {
-        NSInteger ordinality = [self.calendar ordinalityOfUnit:NSCalendarUnitDay inUnit:NSWeekCalendarUnit forDate:referenceDate];
+        
+        NSInteger ordinality = [self.calendar ordinalityOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitWeekOfMonth forDate:referenceDate];
         UILabel *label = [[UILabel alloc] initWithFrame:self.frame];
-        label.textAlignment = UITextAlignmentCenter;
+        label.textAlignment = NSTextAlignmentCenter;
         label.text = [dayFormatter stringFromDate:referenceDate];
         label.font = [UIFont boldSystemFontOfSize:12.f];
         label.backgroundColor = self.backgroundColor;
@@ -90,7 +91,7 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
 }
 
 - (void) customizeMonthHeaderLabel:(UILabel*)label {
-    label.textAlignment = UITextAlignmentCenter;
+    label.textAlignment = NSTextAlignmentCenter;
     label.textColor = self.textColor;
     label.shadowColor = [UIColor whiteColor];
     label.shadowOffset = self.shadowOffset;
